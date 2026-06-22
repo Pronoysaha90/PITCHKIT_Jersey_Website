@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { ArrowRight, ShieldCheck, Truck, BadgePercent, Star, Quote, Mail } from "lucide-react";
+import { ArrowRight, ShieldCheck, Truck, BadgePercent, Star, Quote, Mail, ChevronRight, ChevronLeft } from "lucide-react";
 import banner from "@/assets/banner.png";
 import red from "@/assets/jersey-red.jpg";
 import blue from "@/assets/jersey-blue.jpg";
@@ -7,9 +7,9 @@ import white from "@/assets/jersey-white.jpg";
 import yellow from "@/assets/jersey-yellow.jpg";
 import { products, bundles, productById } from "@/lib/products";
 import { ProductCard } from "@/components/ProductCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -49,10 +49,25 @@ const staggerContainer = {
   }
 };
 
+const heroImages = [
+  { src: banner, alt: "Featured football jersey in stadium" },
+  { src: red, alt: "Premium Red Home Kit" },
+  { src: blue, alt: "Classic Blue Away Kit" },
+  { src: white, alt: "Clean White Third Kit" },
+];
+
 function Home() {
   const featured = products.slice(0, 8);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentHeroIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,99 +76,138 @@ function Home() {
     setEmail("");
   };
 
+  const nextSlide = () => setCurrentHeroIndex((prev) => (prev + 1) % heroImages.length);
+  const prevSlide = () => setCurrentHeroIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length);
+
   return (
     <div>
       {/* HERO */}
-      <section className="relative overflow-hidden bg-zinc-950 text-white pt-20 pb-24 lg:pt-32 lg:pb-32">
-        {/* Animated Background Gradients */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[600px] opacity-40 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/40 via-teal-500/40 to-cyan-500/40 blur-[100px] rounded-full mix-blend-screen animate-pulse" style={{ animationDuration: '4s' }} />
-        </div>
-        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
+      <section className="relative overflow-hidden border-b border-border bg-background/50">
+        {/* Subtle animated background gradients */}
+        <div className="absolute top-0 -left-1/4 w-[150%] h-[150%] -z-20 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" />
+        <motion.div 
+          animate={{ scale: [1, 1.05, 1], opacity: [0.3, 0.5, 0.3] }} 
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -top-40 -right-40 w-96 h-96 bg-primary/20 rounded-full blur-3xl -z-10" 
+        />
+        <motion.div 
+          animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.4, 0.2] }} 
+          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          className="absolute -bottom-40 left-20 w-80 h-80 bg-accent/20 rounded-full blur-3xl -z-10" 
+        />
 
-        <div className="container-x relative z-10 grid items-center gap-12 lg:grid-cols-2">
-          <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="order-2 lg:order-1 text-center lg:text-left flex flex-col items-center lg:items-start">
-            <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm font-medium backdrop-blur-md">
-              <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
-              <span className="text-zinc-300">25/26 Season Drop Available</span>
+        <div className="container-x grid items-center gap-12 py-16 lg:grid-cols-2 lg:py-24 relative z-10">
+          <motion.div initial="hidden" animate="visible" variants={fadeInUp} className="order-2 lg:order-1 text-center lg:text-left flex flex-col items-center lg:items-start">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8 }} 
+              animate={{ opacity: 1, scale: 1 }} 
+              transition={{ delay: 0.2 }}
+              className="chip bg-primary/10 text-primary border border-primary/20 backdrop-blur-sm"
+            >
+              25/26 Season Drop
             </motion.div>
-            
-            <motion.h1 variants={fadeInUp} className="mt-6 font-display text-5xl leading-[1.05] sm:text-6xl lg:text-7xl font-bold tracking-tight text-white drop-shadow-lg">
+            <h1 className="mt-6 font-display text-5xl leading-[1.05] sm:text-6xl lg:text-7xl xl:text-[5rem] tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-foreground to-foreground/70">
               Wear the badge.<br />
-              <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-pulse" style={{ animationDuration: '3s' }}>
-                Own the pitch.
-              </span>
-            </motion.h1>
-            
-            <motion.p variants={fadeInUp} className="mt-6 max-w-lg text-lg text-zinc-400 mx-auto lg:mx-0 leading-relaxed">
-              Premium home, away and retro kits from every league — built with the same fabrics the pros wear. <strong className="text-white font-medium">Free shipping in Bangladesh over ৳12,000.</strong>
-            </motion.p>
-            
-            <motion.div variants={fadeInUp} className="mt-8 flex flex-wrap justify-center lg:justify-start gap-4">
+              <span className="text-primary italic pr-2">Own the pitch.</span>
+            </h1>
+            <p className="mt-6 max-w-lg text-lg text-muted-foreground mx-auto lg:mx-0 leading-relaxed">
+              Premium home, away and retro kits from every league — built with the same fabrics the pros wear. Free shipping in Bangladesh over ৳12,000.
+            </p>
+            <div className="mt-8 flex flex-wrap justify-center lg:justify-start gap-4">
               <Link
                 to="/shop"
-                className="group relative inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-bold text-zinc-950 transition-all hover:scale-105 hover:shadow-[0_0_40px_-10px_rgba(255,255,255,0.4)] overflow-hidden"
+                className="group relative inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-bold text-primary-foreground overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(var(--primary),0.4)]"
               >
-                <span className="relative z-10 flex items-center gap-2">Shop new arrivals <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-100 to-cyan-100 opacity-0 transition-opacity group-hover:opacity-100" />
+                <span className="relative z-10 flex items-center gap-2">
+                  Shop new arrivals <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </span>
+                <div className="absolute inset-0 -z-10 bg-gradient-to-r from-primary via-pitch-deep to-primary opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               </Link>
               <Link
                 to="/bundles"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-md px-8 py-4 text-sm font-bold text-white transition-all hover:bg-white/10 hover:scale-105"
+                className="inline-flex items-center gap-2 rounded-full border-2 border-foreground/10 bg-background/50 backdrop-blur-sm px-8 py-4 text-sm font-bold hover:border-foreground/30 hover:bg-foreground/5 transition-all hover:scale-105"
               >
                 Build a bundle — save 18%
               </Link>
-            </motion.div>
-            
-            <motion.div variants={fadeInUp} className="mt-12 flex flex-wrap justify-center lg:justify-start items-center gap-6 text-sm text-zinc-400 font-medium">
-              <div className="flex items-center gap-2"><Truck className="h-5 w-5 text-emerald-400" /> Fast Delivery</div>
-              <div className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-emerald-400" /> 30-day returns</div>
-              <div className="hidden sm:flex items-center gap-2"><BadgePercent className="h-5 w-5 text-emerald-400" /> COD + bKash</div>
-            </motion.div>
+            </div>
+            <div className="mt-10 flex flex-wrap justify-center lg:justify-start items-center gap-6 text-sm font-medium text-muted-foreground">
+              <div className="flex items-center gap-2 bg-background/50 px-3 py-1.5 rounded-full border border-border backdrop-blur-md shadow-sm"><Truck className="h-4 w-4 text-primary" /> Free shipping</div>
+              <div className="flex items-center gap-2 bg-background/50 px-3 py-1.5 rounded-full border border-border backdrop-blur-md shadow-sm"><ShieldCheck className="h-4 w-4 text-primary" /> 30-day returns</div>
+              <div className="hidden sm:flex items-center gap-2 bg-background/50 px-3 py-1.5 rounded-full border border-border backdrop-blur-md shadow-sm"><BadgePercent className="h-4 w-4 text-primary" /> COD available</div>
+            </div>
           </motion.div>
+          
+          <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, ease: "easeOut" }} className="relative order-1 lg:order-2 perspective-1000">
+            <div className="relative aspect-[4/3] sm:aspect-[4/5] lg:aspect-[3/4] w-full max-w-md mx-auto xl:max-w-lg">
+              {/* Slider Controls */}
+              <div className="absolute top-1/2 -translate-y-1/2 -left-4 z-20">
+                <button onClick={prevSlide} className="p-2 rounded-full bg-background/80 backdrop-blur border border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all shadow-lg">
+                  <ChevronLeft className="h-5 w-5" />
+                </button>
+              </div>
+              <div className="absolute top-1/2 -translate-y-1/2 -right-4 z-20">
+                <button onClick={nextSlide} className="p-2 rounded-full bg-background/80 backdrop-blur border border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all shadow-lg">
+                  <ChevronRight className="h-5 w-5" />
+                </button>
+              </div>
 
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }} 
-            animate={{ opacity: 1, scale: 1 }} 
-            transition={{ duration: 0.8, ease: "easeOut" }} 
-            className="relative order-1 lg:order-2"
-          >
-            <motion.div
-              animate={{ y: [0, -15, 0] }}
-              transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
-              className="relative z-10 mx-auto max-w-md lg:max-w-full"
-            >
-              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-b from-emerald-500/30 to-transparent blur-2xl" />
-              <img
-                src={banner}
-                alt="Featured football jersey hanging in stadium tunnel"
-                width={1600}
-                height={1100}
-                className="w-full rounded-2xl object-cover shadow-2xl border border-white/10 relative z-10 ring-1 ring-white/10"
-              />
+              {/* Slider Indicators */}
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+                {heroImages.map((_, idx) => (
+                  <button 
+                    key={idx} 
+                    onClick={() => setCurrentHeroIndex(idx)}
+                    className={`h-2 rounded-full transition-all duration-300 ${idx === currentHeroIndex ? 'w-6 bg-primary' : 'w-2 bg-white/50 hover:bg-white/80'}`}
+                  />
+                ))}
+              </div>
+
+              {/* Decorative Frame */}
+              <div className="absolute -inset-4 -z-10 rounded-[2.5rem] bg-gradient-to-br from-border/50 to-transparent border border-border/50 backdrop-blur-sm transform rotate-3" />
+              <div className="absolute -inset-4 -z-20 rounded-[2.5rem] bg-accent/5 transform -rotate-2" />
               
-              {/* Floating Glassmorphism Badge */}
+              <div className="w-full h-full rounded-[2rem] overflow-hidden border border-border/50 shadow-2xl relative bg-card">
+                <AnimatePresence mode="popLayout">
+                  <motion.img
+                    key={currentHeroIndex}
+                    src={heroImages[currentHeroIndex].src}
+                    alt={heroImages[currentHeroIndex].alt}
+                    initial={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
+                    animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
+                    transition={{ duration: 0.7, ease: "anticipate" }}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </AnimatePresence>
+                
+                {/* Image Overlay Gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0" />
+              </div>
+
               <motion.div 
-                initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.5, type: "spring" }}
-                className="absolute -bottom-8 -left-8 z-20 hidden sm:flex items-center gap-4 rounded-2xl bg-zinc-900/90 backdrop-blur-xl p-5 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.5)] border border-white/10"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="absolute -bottom-6 -left-6 hidden sm:flex items-center gap-4 rounded-2xl bg-background/90 backdrop-blur-xl p-4 shadow-xl border border-border z-20"
               >
                 <div className="flex -space-x-3">
-                  {[1,2,3,4].map(i => (
-                    <div key={i} className="w-10 h-10 rounded-full border-2 border-zinc-900 bg-zinc-800 flex items-center justify-center overflow-hidden shadow-sm">
-                      <Star className="h-5 w-5 fill-amber-400 text-amber-400" />
-                    </div>
-                  ))}
+                  <div className="h-10 w-10 rounded-full bg-blue-100 border-2 border-background flex items-center justify-center overflow-hidden"><img src={blue} className="h-full w-full object-cover" /></div>
+                  <div className="h-10 w-10 rounded-full bg-red-100 border-2 border-background flex items-center justify-center overflow-hidden"><img src={red} className="h-full w-full object-cover" /></div>
+                  <div className="h-10 w-10 rounded-full bg-yellow-100 border-2 border-background flex items-center justify-center overflow-hidden"><img src={yellow} className="h-full w-full object-cover" /></div>
                 </div>
                 <div>
-                  <div className="flex items-center gap-1 font-bold text-white text-base">
-                    4.9/5 Rating
+                  <div className="flex items-center gap-1">
+                    <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+                    <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+                    <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+                    <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+                    <Star className="h-3.5 w-3.5 fill-amber-500 text-amber-500" />
+                    <span className="font-bold text-sm ml-1">4.9/5</span>
                   </div>
-                  <div className="text-sm text-zinc-400 font-medium">Over 5,000+ happy fans</div>
+                  <div className="text-xs text-muted-foreground font-medium">Over 3,200+ jerseys shipped</div>
                 </div>
               </motion.div>
-            </motion.div>
+            </div>
           </motion.div>
         </div>
       </section>
