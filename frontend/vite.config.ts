@@ -6,7 +6,9 @@ import { nitro } from "nitro/vite";
 
 export default defineConfig({
   plugins: [
-    tanstackStart(),
+    tanstackStart({
+      ssr: false
+    }),
     nitro({
       preset: "vercel"
     }),
