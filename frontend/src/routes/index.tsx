@@ -64,52 +64,96 @@ function Home() {
   return (
     <div>
       {/* HERO */}
-      <section className="relative overflow-hidden border-b border-border bg-background">
-        <div className="container-x grid items-center gap-10 py-14 lg:grid-cols-2 lg:py-20">
-          <motion.div initial="hidden" animate="visible" variants={fadeInUp} className="order-2 lg:order-1 text-center lg:text-left flex flex-col items-center lg:items-start">
-            <span className="chip bg-primary/10 text-primary">25/26 Season Drop</span>
-            <h1 className="mt-4 font-display text-5xl leading-[0.95] sm:text-6xl lg:text-7xl">
-              Wear the badge.<br />Own the pitch.
-            </h1>
-            <p className="mt-5 max-w-lg text-base text-muted-foreground mx-auto lg:mx-0">
-              Premium home, away and retro kits from every league — built with the same fabrics the pros wear. Free shipping in Bangladesh over ৳12,000.
-            </p>
-            <div className="mt-7 flex flex-wrap justify-center lg:justify-start gap-3">
+      <section className="relative overflow-hidden bg-zinc-950 text-white pt-20 pb-24 lg:pt-32 lg:pb-32">
+        {/* Animated Background Gradients */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[600px] opacity-40 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/40 via-teal-500/40 to-cyan-500/40 blur-[100px] rounded-full mix-blend-screen animate-pulse" style={{ animationDuration: '4s' }} />
+        </div>
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-primary/20 blur-[120px] rounded-full pointer-events-none" />
+
+        <div className="container-x relative z-10 grid items-center gap-12 lg:grid-cols-2">
+          <motion.div initial="hidden" animate="visible" variants={staggerContainer} className="order-2 lg:order-1 text-center lg:text-left flex flex-col items-center lg:items-start">
+            <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm font-medium backdrop-blur-md">
+              <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-ping"></span>
+              <span className="text-zinc-300">25/26 Season Drop Available</span>
+            </motion.div>
+            
+            <motion.h1 variants={fadeInUp} className="mt-6 font-display text-5xl leading-[1.05] sm:text-6xl lg:text-7xl font-bold tracking-tight text-white drop-shadow-lg">
+              Wear the badge.<br />
+              <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-pulse" style={{ animationDuration: '3s' }}>
+                Own the pitch.
+              </span>
+            </motion.h1>
+            
+            <motion.p variants={fadeInUp} className="mt-6 max-w-lg text-lg text-zinc-400 mx-auto lg:mx-0 leading-relaxed">
+              Premium home, away and retro kits from every league — built with the same fabrics the pros wear. <strong className="text-white font-medium">Free shipping in Bangladesh over ৳12,000.</strong>
+            </motion.p>
+            
+            <motion.div variants={fadeInUp} className="mt-8 flex flex-wrap justify-center lg:justify-start gap-4">
               <Link
                 to="/shop"
-                className="inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-pitch-deep transition-transform hover:scale-105"
+                className="group relative inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-bold text-zinc-950 transition-all hover:scale-105 hover:shadow-[0_0_40px_-10px_rgba(255,255,255,0.4)] overflow-hidden"
               >
-                Shop new arrivals <ArrowRight className="h-4 w-4" />
+                <span className="relative z-10 flex items-center gap-2">Shop new arrivals <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-100 to-cyan-100 opacity-0 transition-opacity group-hover:opacity-100" />
               </Link>
               <Link
                 to="/bundles"
-                className="inline-flex items-center gap-2 rounded-md border border-foreground px-6 py-3 text-sm font-semibold hover:bg-foreground hover:text-background transition-transform hover:scale-105"
+                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-md px-8 py-4 text-sm font-bold text-white transition-all hover:bg-white/10 hover:scale-105"
               >
                 Build a bundle — save 18%
               </Link>
-            </div>
-            <div className="mt-8 flex flex-wrap justify-center lg:justify-start items-center gap-6 text-xs text-muted-foreground">
-              <div className="flex items-center gap-2"><Truck className="h-4 w-4 text-primary" /> Free shipping over ৳12,000</div>
-              <div className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-primary" /> 30-day returns</div>
-              <div className="hidden sm:flex items-center gap-2"><BadgePercent className="h-4 w-4 text-primary" /> COD + bKash</div>
-            </div>
+            </motion.div>
+            
+            <motion.div variants={fadeInUp} className="mt-12 flex flex-wrap justify-center lg:justify-start items-center gap-6 text-sm text-zinc-400 font-medium">
+              <div className="flex items-center gap-2"><Truck className="h-5 w-5 text-emerald-400" /> Fast Delivery</div>
+              <div className="flex items-center gap-2"><ShieldCheck className="h-5 w-5 text-emerald-400" /> 30-day returns</div>
+              <div className="hidden sm:flex items-center gap-2"><BadgePercent className="h-5 w-5 text-emerald-400" /> COD + bKash</div>
+            </motion.div>
           </motion.div>
-          <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.7 }} className="relative order-1 lg:order-2">
-            <div className="absolute -inset-6 -z-10 rounded-3xl pitch-stripe opacity-30" />
-            <img
-              src={banner}
-              alt="Featured football jersey hanging in stadium tunnel"
-              width={1600}
-              height={1100}
-              className="w-full rounded-2xl object-cover shadow-pop"
-            />
-            <div className="absolute -bottom-5 -left-5 hidden sm:block rounded-xl bg-background p-4 shadow-card border border-border">
-              <div className="flex items-center gap-2">
-                <Star className="h-4 w-4 fill-amber-500 text-amber-500" />
-                <span className="font-bold text-sm">4.8/5</span>
-                <span className="text-xs text-muted-foreground">· 3,200+ shipped</span>
-              </div>
-            </div>
+
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }} 
+            animate={{ opacity: 1, scale: 1 }} 
+            transition={{ duration: 0.8, ease: "easeOut" }} 
+            className="relative order-1 lg:order-2"
+          >
+            <motion.div
+              animate={{ y: [0, -15, 0] }}
+              transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
+              className="relative z-10 mx-auto max-w-md lg:max-w-full"
+            >
+              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-b from-emerald-500/30 to-transparent blur-2xl" />
+              <img
+                src={banner}
+                alt="Featured football jersey hanging in stadium tunnel"
+                width={1600}
+                height={1100}
+                className="w-full rounded-2xl object-cover shadow-2xl border border-white/10 relative z-10 ring-1 ring-white/10"
+              />
+              
+              {/* Floating Glassmorphism Badge */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ delay: 0.6, duration: 0.5, type: "spring" }}
+                className="absolute -bottom-8 -left-8 z-20 hidden sm:flex items-center gap-4 rounded-2xl bg-zinc-900/90 backdrop-blur-xl p-5 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.5)] border border-white/10"
+              >
+                <div className="flex -space-x-3">
+                  {[1,2,3,4].map(i => (
+                    <div key={i} className="w-10 h-10 rounded-full border-2 border-zinc-900 bg-zinc-800 flex items-center justify-center overflow-hidden shadow-sm">
+                      <Star className="h-5 w-5 fill-amber-400 text-amber-400" />
+                    </div>
+                  ))}
+                </div>
+                <div>
+                  <div className="flex items-center gap-1 font-bold text-white text-base">
+                    4.9/5 Rating
+                  </div>
+                  <div className="text-sm text-zinc-400 font-medium">Over 5,000+ happy fans</div>
+                </div>
+              </motion.div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
