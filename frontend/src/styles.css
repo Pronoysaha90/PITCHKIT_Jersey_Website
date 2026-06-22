@@ -1,0 +1,123 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+@import "@fontsource/bebas-neue/400.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-pitch: var(--pitch);
+  --color-pitch-deep: var(--pitch-deep);
+  --color-blood: var(--blood);
+  --color-chalk: var(--chalk);
+  --color-ink: var(--ink);
+  --font-display: "Bebas Neue", "Inter", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --shadow-card: 0 1px 0 var(--border), 0 18px 32px -24px rgb(17 17 17 / 0.18);
+  --shadow-pop: 0 24px 60px -20px rgb(14 124 58 / 0.35);
+}
+
+:root {
+  --radius: 0.375rem;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.18 0.01 256);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.01 256);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.01 256);
+
+  --primary: oklch(0.52 0.14 150);          /* pitch green #0E7C3A */
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0.005 250);
+  --secondary-foreground: oklch(0.18 0.01 256);
+  --muted: oklch(0.97 0.003 250);
+  --muted-foreground: oklch(0.45 0.01 256);
+  --accent: oklch(0.63 0.22 27);             /* red #E11D2E */
+  --accent-foreground: oklch(0.99 0 0);
+  --destructive: oklch(0.6 0.22 27);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  --border: oklch(0.92 0.005 250);
+  --input: oklch(0.92 0.005 250);
+  --ring: oklch(0.52 0.14 150);
+
+  --pitch: oklch(0.52 0.14 150);
+  --pitch-deep: oklch(0.36 0.11 150);
+  --blood: oklch(0.63 0.22 27);
+  --chalk: oklch(0.985 0 0);
+  --ink: oklch(0.16 0.01 256);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: 0.01em;
+  }
+}
+
+@utility container-x {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  max-width: 1280px;
+}
+
+@utility pitch-stripe {
+  background-image: repeating-linear-gradient(
+    90deg,
+    color-mix(in oklab, var(--pitch) 92%, black 0%) 0 80px,
+    color-mix(in oklab, var(--pitch) 80%, black 8%) 80px 160px
+  );
+}
+
+@utility chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
