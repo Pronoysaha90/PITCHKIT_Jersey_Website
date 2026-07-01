@@ -1,6 +1,6 @@
 import { t as jersey_blue_default } from "./jersey-blue-Cg7MS2wI.mjs";
 import { n as require_jsx_runtime } from "../_libs/radix-ui__react-context+react.mjs";
-import { A as Headphones, c as ThumbsUp, m as ShieldCheck, o as Truck } from "../_libs/lucide-react.mjs";
+import { P as Headphones, h as ShieldCheck, l as ThumbsUp, s as Truck } from "../_libs/lucide-react.mjs";
 //#region node_modules/.nitro/vite/services/ssr/assets/about-Big1P0LX.js
 var import_jsx_runtime = require_jsx_runtime();
 var hero_jersey_default = "/assets/hero-jersey-BlI_H7YD.jpg";

@@ -1,30 +1,29 @@
 import { o as __toESM } from "../_runtime.mjs";
 import { n as require_jsx_runtime } from "../_libs/radix-ui__react-context+react.mjs";
 import { r as require_react } from "../_libs/@radix-ui/react-compose-refs+[...].mjs";
-import { C as Menu, S as MessageSquare, g as Search, h as Send, i as User, k as Heart, n as X, p as ShoppingBag } from "../_libs/lucide-react.mjs";
-import { c as products, u as useCartTotals } from "./cart-store-CoxaE1M5.mjs";
+import { A as LogIn, F as Eye, I as CircleCheck, N as Heart, O as Mail, T as Menu, _ as Search, a as UserPlus, f as Smartphone, g as Send, i as User, j as Lock, m as ShoppingBag, n as X, w as MessageSquare, x as Phone } from "../_libs/lucide-react.mjs";
+import { c as products, l as useCart, u as useCartTotals } from "./cart-store-CoxaE1M5.mjs";
 import { _ as useRouter, c as HeadContent, d as Outlet, f as lazyRouteComponent, g as useNavigate, h as Link, m as createRootRouteWithContext, p as createFileRoute, s as Scripts, u as createRouter } from "../_libs/@tanstack/react-router+[...].mjs";
-import { a as DialogOverlay$1, c as DialogTrigger$1, i as DialogDescription$1, n as DialogClose, o as DialogPortal$1, r as DialogContent$1, s as DialogTitle$1, t as Dialog$1 } from "../_libs/@radix-ui/react-dialog+[...].mjs";
+import { a as DialogOverlay$1, c as DialogTrigger, i as DialogDescription$1, n as DialogClose, o as DialogPortal$1, r as DialogContent$1, s as DialogTitle$1, t as Dialog$1 } from "../_libs/@radix-ui/react-dialog+[...].mjs";
 import { n as toast, t as Toaster } from "../_libs/sonner.mjs";
-import { t as Route$9 } from "./products._slug-Cllp94ne.mjs";
 import { t as useWishlist } from "./wishlist-store-CA4unLzC.mjs";
+import { t as Route$9 } from "./products._slug-BKUl41Fn.mjs";
 import { t as useAuth } from "./auth-store-C6bWg3oj.mjs";
 import { t as QueryClient } from "../_libs/tanstack__query-core.mjs";
 import { t as QueryClientProvider } from "../_libs/tanstack__react-query.mjs";
+import { t as _e } from "../_libs/cmdk.mjs";
 import { n as clsx, t as cva } from "../_libs/class-variance-authority+clsx.mjs";
 import { t as twMerge } from "../_libs/tailwind-merge.mjs";
-import { t as _e } from "../_libs/cmdk.mjs";
 import { n as AnimatePresence, t as motion } from "../_libs/framer-motion.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/router-43l0DnWV.js
+//#region node_modules/.nitro/vite/services/ssr/assets/router-BeU8MTYm.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
-var styles_default = "/assets/styles-BazMUTQ4.css";
+var styles_default = "/assets/styles-CQxkXI8p.css";
 var favicon_default = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMTZhMzRhIiAvPgogIDx0ZXh0IHg9IjUwJSIgeT0iNTMlIiBmb250LWZhbWlseT0ic3lzdGVtLXVpLCAtYXBwbGUtc3lzdGVtLCBzYW5zLXNlcmlmIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjQ4IiBmaWxsPSJ3aGl0ZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+UEs8L3RleHQ+Cjwvc3ZnPgo=";
 function cn(...inputs) {
 	return twMerge(clsx(inputs));
 }
 var Dialog = Dialog$1;
-var DialogTrigger = DialogTrigger$1;
 var DialogPortal = DialogPortal$1;
 var DialogOverlay = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DialogOverlay$1, {
 	ref,
@@ -133,7 +132,7 @@ var CommandShortcut = ({ className, ...props }) => {
 };
 CommandShortcut.displayName = "CommandShortcut";
 var Sheet = Dialog$1;
-var SheetTrigger = DialogTrigger$1;
+var SheetTrigger = DialogTrigger;
 var SheetPortal = DialogPortal$1;
 var SheetOverlay = import_react.forwardRef(({ className, ...props }, ref) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DialogOverlay$1, {
 	className: cn("fixed inset-0 z-50 bg-black/80  data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0", className),
@@ -185,6 +184,407 @@ var SheetDescription = import_react.forwardRef(({ className, ...props }, ref) =>
 	...props
 }));
 SheetDescription.displayName = DialogDescription$1.displayName;
+function AuthModal({ open, onOpenChange }) {
+	const [isLogin, setIsLogin] = (0, import_react.useState)(true);
+	const [showPassword, setShowPassword] = (0, import_react.useState)(false);
+	const { login, signup } = useAuth();
+	const navigate = useNavigate();
+	const [email, setEmail] = (0, import_react.useState)("");
+	const [password, setPassword] = (0, import_react.useState)("");
+	const [name, setName] = (0, import_react.useState)("");
+	const handleLogin = (e) => {
+		e.preventDefault();
+		if (!email || !password) {
+			toast.error("Please enter email and password");
+			return;
+		}
+		const res = login(email, password);
+		if (res.success) {
+			toast.success("Logged in successfully!");
+			onOpenChange(false);
+			navigate({ to: "/profile" });
+		} else toast.error(res.error || "Failed to log in");
+	};
+	const handleSignup = (e) => {
+		e.preventDefault();
+		if (!email || !password || !name) {
+			toast.error("Please fill in all required fields");
+			return;
+		}
+		const res = signup({
+			email,
+			password,
+			name
+		});
+		if (res.success) {
+			toast.success("Account created successfully!");
+			onOpenChange(false);
+			navigate({ to: "/profile" });
+		} else toast.error(res.error || "Failed to sign up");
+	};
+	const handleGoogleLogin = () => {
+		toast.info("Google Login requires Firebase/Supabase API keys to function as a real popup.");
+		const popup = window.open("", "Google Login", "width=500,height=600");
+		if (popup) {
+			popup.document.write("<h2>Google Sign In (Placeholder)</h2><p>Configure Firebase/Supabase to enable real OAuth flow.</p>");
+			setTimeout(() => {
+				popup.close();
+				if (login("google-user@gmail.com", "", true).success) {
+					toast.success("Mock Google Login successful!");
+					onOpenChange(false);
+					navigate({ to: "/profile" });
+				}
+			}, 2e3);
+		}
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Dialog, {
+		open,
+		onOpenChange,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(DialogContent, {
+			className: "p-0 border-none max-w-5xl overflow-hidden bg-transparent shadow-none [&>button]:hidden sm:rounded-[2rem]",
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "sr-only",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(DialogTitle, { children: "Authentication" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DialogDescription, { children: "Login or sign up for an account." })]
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: "w-full bg-white rounded-[2rem] shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[600px] relative",
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					className: "hidden md:flex w-full md:w-1/2 relative overflow-hidden bg-primary text-primary-foreground p-10 flex-col justify-center",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AnimatePresence, {
+						mode: "wait",
+						children: isLogin ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(motion.div, {
+							initial: {
+								opacity: 0,
+								x: -20
+							},
+							animate: {
+								opacity: 1,
+								x: 0
+							},
+							exit: {
+								opacity: 0,
+								x: 20
+							},
+							transition: { duration: .3 },
+							className: "w-full max-w-md mx-auto",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
+									className: "text-4xl lg:text-5xl font-display font-bold mb-4 tracking-wider",
+									children: "Welcome to PITCHKIT"
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+									className: "text-primary-foreground/90 text-lg mb-8",
+									children: "Your one-stop shop for premium football jerseys."
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
+									className: "space-y-4",
+									children: [
+										"Fast & Secure Shopping",
+										"Exclusive Deals & Offers",
+										"24/7 Customer Support",
+										"Easy Returns & Refunds"
+									].map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(motion.li, {
+										initial: {
+											opacity: 0,
+											x: -10
+										},
+										animate: {
+											opacity: 1,
+											x: 0
+										},
+										transition: { delay: .1 * i + .2 },
+										className: "flex items-center gap-3 font-medium text-primary-foreground/90",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, { className: "w-5 h-5 text-primary-foreground" }), item]
+									}, item))
+								})
+							]
+						}, "login-text") : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(motion.div, {
+							initial: {
+								opacity: 0,
+								x: -20
+							},
+							animate: {
+								opacity: 1,
+								x: 0
+							},
+							exit: {
+								opacity: 0,
+								x: 20
+							},
+							transition: { duration: .3 },
+							className: "w-full max-w-md mx-auto",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
+									className: "text-4xl lg:text-5xl font-display font-bold mb-4 tracking-wider",
+									children: "Hello, Friend!"
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+									className: "text-primary-foreground/90 text-lg mb-8",
+									children: "Enter your personal details and start your journey with us."
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
+									className: "space-y-4",
+									children: [
+										"Fast & Secure Shopping",
+										"Exclusive Deals & Offers",
+										"24/7 Customer Support",
+										"Easy Returns & Refunds"
+									].map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(motion.li, {
+										initial: {
+											opacity: 0,
+											x: -10
+										},
+										animate: {
+											opacity: 1,
+											x: 0
+										},
+										transition: { delay: .1 * i + .2 },
+										className: "flex items-center gap-3 font-medium text-primary-foreground/90",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, { className: "w-5 h-5 text-primary-foreground" }), item]
+									}, item))
+								})
+							]
+						}, "register-text")
+					})
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "w-full md:w-1/2 bg-background p-8 lg:p-12 flex flex-col relative overflow-y-auto max-h-[90vh] md:max-h-none",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+						onClick: () => onOpenChange(false),
+						className: "absolute right-4 top-4 p-2 rounded-full hover:bg-muted text-muted-foreground hover:text-foreground transition-colors",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { className: "w-5 h-5" })
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: "w-full max-w-md mx-auto",
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
+								className: "text-3xl font-display font-bold text-primary text-center mb-8 tracking-widest",
+								children: "PITCHKIT"
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "bg-muted p-1 rounded-full flex mb-8 relative",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(motion.div, {
+										className: "absolute top-1 bottom-1 w-[calc(50%-4px)] bg-primary rounded-full shadow-sm",
+										animate: { left: isLogin ? "4px" : "calc(50%)" },
+										transition: {
+											type: "spring",
+											stiffness: 300,
+											damping: 30
+										}
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+										onClick: () => setIsLogin(true),
+										className: `flex-1 py-2.5 text-sm font-bold z-10 transition-colors ${isLogin ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`,
+										children: "Login"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+										onClick: () => setIsLogin(false),
+										className: `flex-1 py-2.5 text-sm font-bold z-10 transition-colors ${!isLogin ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"}`,
+										children: "Sign Up"
+									})
+								]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex gap-4 mb-4",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+									onClick: handleGoogleLogin,
+									className: "flex-1 flex items-center justify-center gap-2 py-2.5 border border-border rounded-xl hover:bg-muted transition-colors font-medium text-sm text-foreground",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										className: "text-red-500 font-bold text-lg",
+										children: "G"
+									}), " Google"]
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+									className: "flex-1 flex items-center justify-center gap-2 py-2.5 border border-border rounded-xl hover:bg-muted transition-colors font-medium text-sm text-foreground",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										className: "text-blue-600 font-bold text-lg",
+										children: "f"
+									}), " Facebook"]
+								})]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+								className: "w-full flex items-center justify-center gap-2 py-2.5 bg-foreground text-background rounded-xl hover:bg-foreground/90 transition-colors font-medium text-sm mb-6",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Smartphone, { className: "w-4 h-4" }), " Login with Phone Number"]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "flex items-center gap-4 mb-6",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "flex-1 h-px bg-border" }),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+										className: "text-xs font-semibold text-muted-foreground uppercase tracking-widest",
+										children: "OR"
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "flex-1 h-px bg-border" })
+								]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: "relative",
+								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AnimatePresence, {
+									mode: "wait",
+									children: isLogin ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(motion.form, {
+										initial: {
+											opacity: 0,
+											y: 10
+										},
+										animate: {
+											opacity: 1,
+											y: 0
+										},
+										exit: {
+											opacity: 0,
+											y: -10
+										},
+										transition: { duration: .2 },
+										className: "space-y-4",
+										onSubmit: handleLogin,
+										children: [
+											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: "relative",
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+													type: "email",
+													placeholder: "Email address",
+													value: email,
+													onChange: (e) => setEmail(e.target.value),
+													className: "w-full px-4 py-3 bg-background border border-input rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm text-foreground"
+												}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, { className: "absolute right-4 top-3.5 w-4 h-4 text-muted-foreground" })]
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: "relative",
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+													type: showPassword ? "text" : "password",
+													placeholder: "Password",
+													value: password,
+													onChange: (e) => setPassword(e.target.value),
+													className: "w-full px-4 py-3 bg-background border border-input rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm text-foreground"
+												}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+													type: "button",
+													onClick: () => setShowPassword(!showPassword),
+													className: "absolute right-4 top-3.5",
+													children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Eye, { className: `w-4 h-4 transition-colors ${showPassword ? "text-primary" : "text-muted-foreground"}` })
+												})]
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: "flex items-center justify-between pt-2",
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", {
+													className: "flex items-center gap-2 cursor-pointer",
+													children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+														type: "checkbox",
+														className: "w-4 h-4 rounded border-input text-primary focus:ring-primary"
+													}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+														className: "text-sm text-foreground",
+														children: "Remember me"
+													})]
+												}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+													type: "button",
+													className: "text-sm text-primary font-medium hover:underline",
+													children: "Forgot password?"
+												})]
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+												type: "submit",
+												className: "w-full py-3.5 bg-primary text-primary-foreground rounded-xl font-bold hover:bg-primary/90 transition-colors mt-6 flex items-center justify-center gap-2 shadow-lg shadow-primary/20",
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(LogIn, { className: "w-4 h-4" }), " Login"]
+											})
+										]
+									}, "login-form") : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(motion.form, {
+										initial: {
+											opacity: 0,
+											y: 10
+										},
+										animate: {
+											opacity: 1,
+											y: 0
+										},
+										exit: {
+											opacity: 0,
+											y: -10
+										},
+										transition: { duration: .2 },
+										className: "space-y-4",
+										onSubmit: handleSignup,
+										children: [
+											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: "relative",
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+													type: "text",
+													placeholder: "Full Name",
+													value: name,
+													onChange: (e) => setName(e.target.value),
+													className: "w-full px-4 py-3 bg-background border border-input rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm text-foreground"
+												}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(User, { className: "absolute right-4 top-3.5 w-4 h-4 text-muted-foreground" })]
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: "relative",
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+													type: "email",
+													placeholder: "Email address",
+													value: email,
+													onChange: (e) => setEmail(e.target.value),
+													className: "w-full px-4 py-3 bg-background border border-input rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm text-foreground"
+												}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, { className: "absolute right-4 top-3.5 w-4 h-4 text-muted-foreground" })]
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: "relative",
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+													type: "tel",
+													placeholder: "Phone Number (Optional)",
+													className: "w-full px-4 py-3 bg-background border border-input rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm text-foreground"
+												}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Phone, { className: "absolute right-4 top-3.5 w-4 h-4 text-muted-foreground" })]
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: "relative",
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+													type: showPassword ? "text" : "password",
+													placeholder: "Password",
+													value: password,
+													onChange: (e) => setPassword(e.target.value),
+													className: "w-full px-4 py-3 bg-background border border-input rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm text-foreground"
+												}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+													type: "button",
+													onClick: () => setShowPassword(!showPassword),
+													className: "absolute right-4 top-3.5",
+													children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Eye, { className: `w-4 h-4 transition-colors ${showPassword ? "text-primary" : "text-muted-foreground"}` })
+												})]
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: "relative",
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+													type: "password",
+													placeholder: "Confirm Password",
+													className: "w-full px-4 py-3 bg-background border border-input rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm text-foreground"
+												}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Lock, { className: "absolute right-4 top-3.5 w-4 h-4 text-muted-foreground" })]
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+												type: "submit",
+												className: "w-full py-3.5 bg-primary text-primary-foreground rounded-xl font-bold hover:bg-primary/90 transition-colors mt-6 flex items-center justify-center gap-2 shadow-lg shadow-primary/20",
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(UserPlus, { className: "w-4 h-4" }), " Create Account"]
+											})
+										]
+									}, "register-form")
+								})
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "mt-8 text-center text-sm text-muted-foreground",
+								children: [
+									"By continuing, you agree to PITCHKIT's ",
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+										href: "#",
+										className: "text-primary hover:underline",
+										children: "Terms of Service"
+									}),
+									" & ",
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+										href: "#",
+										className: "text-primary hover:underline",
+										children: "Privacy Policy"
+									})
+								]
+							})
+						]
+					})]
+				})]
+			})]
+		})
+	});
+}
 var navLinks = [
 	{
 		to: "/",
@@ -205,44 +605,12 @@ var navLinks = [
 ];
 function Header() {
 	const { count } = useCartTotals();
+	const cartItems = useCart((s) => s.items);
 	const wishlistItems = useWishlist((s) => s.items);
-	const { isLoggedIn, login, signup } = useAuth();
+	const { isLoggedIn } = useAuth();
 	const navigate = useNavigate();
 	const [loginOpen, setLoginOpen] = (0, import_react.useState)(false);
 	const [searchOpen, setSearchOpen] = (0, import_react.useState)(false);
-	const [isSignupView, setIsSignupView] = (0, import_react.useState)(false);
-	const [email, setEmail] = (0, import_react.useState)("");
-	const [password, setPassword] = (0, import_react.useState)("");
-	const [name, setName] = (0, import_react.useState)("");
-	const handleAuth = () => {
-		if (isSignupView) {
-			if (!email || !password || !name) {
-				toast.error("Please fill in all fields");
-				return;
-			}
-			const res = signup({
-				email,
-				password,
-				name
-			});
-			if (res.success) {
-				toast.success("Account created successfully!");
-				setLoginOpen(false);
-				navigate({ to: "/profile" });
-			} else toast.error(res.error || "Failed to sign up");
-		} else {
-			if (!email || !password) {
-				toast.error("Please enter email and password");
-				return;
-			}
-			const res = login(email, password);
-			if (res.success) {
-				toast.success("Logged in successfully!");
-				setLoginOpen(false);
-				navigate({ to: "/profile" });
-			} else toast.error(res.error || "Failed to log in");
-		}
-	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("header", {
 		className: "sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur",
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -313,22 +681,129 @@ function Header() {
 								}, p.id))
 							})] })]
 						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
-							to: "/wishlist",
-							className: "relative hidden md:grid h-10 w-10 place-items-center rounded-md hover:bg-muted",
-							"aria-label": "Wishlist",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Heart, { className: "h-5 w-5" }), wishlistItems.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-accent-foreground",
-								children: wishlistItems.length
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "relative group hidden md:flex items-center h-16",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
+								to: "/wishlist",
+								className: "relative grid h-10 w-10 place-items-center rounded-md hover:bg-muted",
+								"aria-label": "Wishlist",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Heart, { className: "h-5 w-5" }), wishlistItems.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-accent-foreground",
+									children: wishlistItems.length
+								})]
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "absolute top-[60px] right-0 w-80 bg-background border border-border rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden transform group-hover:translate-y-0 translate-y-2",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "p-4 flex flex-col gap-3 max-h-[350px] overflow-y-auto no-scrollbar",
+									children: [wishlistItems.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+										className: "text-sm text-muted-foreground text-center py-6",
+										children: "Your wishlist is empty"
+									}) : wishlistItems.slice(0, 3).map((id) => {
+										const p = products.find((x) => x.id === id);
+										if (!p) return null;
+										return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+											className: "flex items-center gap-3",
+											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+												src: p.image,
+												alt: p.name,
+												className: "w-14 h-[4.5rem] object-cover rounded-md border border-border"
+											}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: "flex flex-col flex-1",
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+													className: "text-sm font-semibold line-clamp-2 leading-tight",
+													children: p.name
+												}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+													className: "text-xs font-bold text-primary mt-1",
+													children: ["৳", p.price]
+												})]
+											})]
+										}, id);
+									}), wishlistItems.length > 3 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "text-xs font-semibold text-center text-muted-foreground pt-3 border-t border-border mt-1",
+										children: [
+											"+ ",
+											wishlistItems.length - 3,
+											" more items"
+										]
+									})]
+								}), wishlistItems.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: "p-4 border-t border-border bg-secondary/30",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+										to: "/wishlist",
+										className: "flex items-center justify-center w-full py-2.5 text-sm font-bold bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors uppercase tracking-widest",
+										children: "View Wishlist"
+									})
+								})]
 							})]
 						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
-							to: "/cart",
-							className: "relative hidden md:grid h-10 w-10 place-items-center rounded-md hover:bg-muted",
-							"aria-label": "Cart",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShoppingBag, { className: "h-5 w-5" }), count > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: "absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-accent-foreground",
-								children: count
+						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "relative group hidden md:flex items-center h-16",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
+								to: "/cart",
+								className: "relative grid h-10 w-10 place-items-center rounded-md hover:bg-muted",
+								"aria-label": "Cart",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShoppingBag, { className: "h-5 w-5" }), count > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: "absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-accent-foreground",
+									children: count
+								})]
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "absolute top-[60px] right-0 w-80 bg-background border border-border rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden transform group-hover:translate-y-0 translate-y-2",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "p-4 flex flex-col gap-3 max-h-[350px] overflow-y-auto no-scrollbar",
+									children: [cartItems.length === 0 ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+										className: "text-sm text-muted-foreground text-center py-6",
+										children: "Your cart is empty"
+									}) : cartItems.slice(0, 3).map((item) => {
+										const p = products.find((x) => x.id === item.productId);
+										if (!p) return null;
+										return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+											className: "flex items-center gap-3",
+											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+												src: p.image,
+												alt: p.name,
+												className: "w-14 h-[4.5rem] object-cover rounded-md border border-border"
+											}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: "flex flex-col flex-1",
+												children: [
+													/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+														className: "text-sm font-semibold line-clamp-1",
+														children: p.name
+													}),
+													/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+														className: "text-xs text-muted-foreground mt-0.5",
+														children: [
+															"Size: ",
+															item.size,
+															" | Qty: ",
+															item.quantity
+														]
+													}),
+													/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+														className: "text-xs font-bold text-foreground mt-1",
+														children: ["৳", (p.price * item.quantity).toFixed(2)]
+													})
+												]
+											})]
+										}, item.id);
+									}), cartItems.length > 3 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "text-xs font-semibold text-center text-muted-foreground pt-3 border-t border-border mt-1",
+										children: [
+											"+ ",
+											cartItems.length - 3,
+											" more items"
+										]
+									})]
+								}), cartItems.length > 0 && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "p-4 border-t border-border bg-secondary/30",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "flex justify-between items-center mb-4 text-base font-bold",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Subtotal" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", { children: ["৳", cartItems.reduce((acc, item) => acc + (products.find((x) => x.id === item.productId)?.price || 0) * item.quantity, 0).toFixed(2)] })]
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+										to: "/checkout",
+										className: "flex items-center justify-center w-full py-3 text-sm font-bold bg-foreground text-background rounded-lg hover:bg-foreground/90 transition-colors uppercase tracking-widest",
+										children: "Checkout Now"
+									})]
+								})]
 							})]
 						}),
 						isLoggedIn ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
@@ -336,121 +811,15 @@ function Header() {
 							className: "grid h-10 w-10 place-items-center rounded-md hover:bg-muted focus:outline-none",
 							"aria-label": "Profile",
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(User, { className: "h-5 w-5" })
-						}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Dialog, {
+						}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							onClick: () => setLoginOpen(true),
+							className: "grid h-10 w-10 place-items-center rounded-md hover:bg-muted focus:outline-none",
+							"aria-label": "Login",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(User, { className: "h-5 w-5" })
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(AuthModal, {
 							open: loginOpen,
-							onOpenChange: setLoginOpen,
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(DialogTrigger, {
-								asChild: true,
-								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-									className: "grid h-10 w-10 place-items-center rounded-md hover:bg-muted focus:outline-none",
-									"aria-label": "Login",
-									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(User, { className: "h-5 w-5" })
-								})
-							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(DialogContent, {
-								className: "sm:max-w-[425px]",
-								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(DialogHeader, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(DialogTitle, { children: isSignupView ? "Create an Account" : "Welcome to PITCHKIT" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(DialogDescription, { children: isSignupView ? "Sign up to start shopping and tracking your orders." : "Sign in to your account to continue." })] }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									className: "grid gap-4 py-4",
-									children: [
-										isSignupView && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-											className: "flex flex-col gap-2",
-											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", {
-												htmlFor: "name",
-												className: "text-sm font-medium text-foreground",
-												children: "Name"
-											}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-												id: "name",
-												value: name,
-												onChange: (e) => setName(e.target.value),
-												type: "text",
-												placeholder: "John Doe",
-												className: "rounded-md border border-input bg-background px-3 py-2 text-sm focus:border-primary focus:outline-none"
-											})]
-										}),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-											className: "flex flex-col gap-2",
-											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", {
-												htmlFor: "email",
-												className: "text-sm font-medium text-foreground",
-												children: "Email"
-											}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-												id: "email",
-												value: email,
-												onChange: (e) => setEmail(e.target.value),
-												type: "email",
-												placeholder: "name@example.com",
-												className: "rounded-md border border-input bg-background px-3 py-2 text-sm focus:border-primary focus:outline-none"
-											})]
-										}),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-											className: "flex flex-col gap-2",
-											children: [
-												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", {
-													htmlFor: "password",
-													className: "text-sm font-medium text-foreground",
-													children: "Password"
-												}),
-												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
-													id: "password",
-													value: password,
-													onChange: (e) => setPassword(e.target.value),
-													type: "password",
-													placeholder: "••••••••",
-													className: "rounded-md border border-input bg-background px-3 py-2 text-sm focus:border-primary focus:outline-none"
-												}),
-												!isSignupView && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-													className: "text-xs text-muted-foreground text-left hover:text-foreground underline w-fit",
-													children: "Forgot Password?"
-												})
-											]
-										}),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-											onClick: handleAuth,
-											className: "mt-2 w-full rounded-md bg-foreground py-2.5 text-sm font-semibold text-background hover:bg-foreground/90 transition-colors",
-											children: isSignupView ? "Sign up" : "Log In"
-										}),
-										!isSignupView && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-											className: "relative my-4",
-											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-												className: "absolute inset-0 flex items-center",
-												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { className: "w-full border-t border-border" })
-											}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-												className: "relative flex justify-center text-xs uppercase",
-												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-													className: "bg-background px-2 text-muted-foreground",
-													children: "Or continue with"
-												})
-											})]
-										}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-											onClick: () => {
-												if (login("user@gmail.com", "", true).success) {
-													toast.success("Logged in with Google!");
-													setLoginOpen(false);
-													navigate({ to: "/profile" });
-												}
-											},
-											className: "flex w-full items-center justify-center gap-2 rounded-md border border-input bg-background py-2.5 text-sm font-semibold hover:bg-muted transition-colors text-foreground",
-											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
-												role: "img",
-												viewBox: "0 0 24 24",
-												className: "h-4 w-4 fill-current",
-												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z" })
-											}), "Google"]
-										})] }),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-											className: "text-center text-sm text-muted-foreground mt-2",
-											children: [
-												isSignupView ? "Already have an account?" : "Don't have an account?",
-												" ",
-												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-													onClick: () => setIsSignupView(!isSignupView),
-													className: "font-semibold text-foreground hover:underline",
-													children: isSignupView ? "Log In" : "Sign up"
-												})
-											]
-										})
-									]
-								})]
-							})]
+							onOpenChange: setLoginOpen
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Sheet, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SheetTrigger, {
 							asChild: true,
@@ -958,7 +1327,7 @@ var Route$1 = createFileRoute("/about")({
 	}] }),
 	component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-var $$splitComponentImporter = () => import("./routes-CrPsWBg2.mjs");
+var $$splitComponentImporter = () => import("./routes-CSS1eoXn.mjs");
 var Route = createFileRoute("/")({
 	head: () => ({ meta: [
 		{ title: "PITCHKIT — Football jerseys for every league" },

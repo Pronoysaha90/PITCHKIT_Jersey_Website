@@ -1,7 +1,7 @@
 import { o as __toESM } from "../_runtime.mjs";
 import { n as require_jsx_runtime } from "../_libs/radix-ui__react-context+react.mjs";
 import { r as require_react } from "../_libs/@radix-ui/react-compose-refs+[...].mjs";
-import { d as Smartphone, j as CircleCheck, o as Truck, r as Wallet } from "../_libs/lucide-react.mjs";
+import { I as CircleCheck, f as Smartphone, r as Wallet, s as Truck } from "../_libs/lucide-react.mjs";
 import { l as useCart, o as productById, u as useCartTotals } from "./cart-store-CoxaE1M5.mjs";
 import { g as useNavigate } from "../_libs/@tanstack/react-router+[...].mjs";
 import { n as toast } from "../_libs/sonner.mjs";

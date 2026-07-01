@@ -1,7 +1,7 @@
 import { o as __toESM } from "../_runtime.mjs";
 import { n as require_jsx_runtime } from "../_libs/radix-ui__react-context+react.mjs";
 import { r as require_react } from "../_libs/@radix-ui/react-compose-refs+[...].mjs";
-import { f as SlidersHorizontal, g as Search, n as X } from "../_libs/lucide-react.mjs";
+import { _ as Search, n as X, p as SlidersHorizontal } from "../_libs/lucide-react.mjs";
 import { c as products } from "./cart-store-CoxaE1M5.mjs";
 import { t as ProductCard } from "./ProductCard-69up3jhp.mjs";
 //#region node_modules/.nitro/vite/services/ssr/assets/shop-dMvVQJ75.js

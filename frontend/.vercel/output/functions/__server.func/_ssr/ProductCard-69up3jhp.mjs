@@ -1,5 +1,5 @@
 import { n as require_jsx_runtime } from "../_libs/radix-ui__react-context+react.mjs";
-import { k as Heart, p as ShoppingBag, t as Zap, u as Star } from "../_libs/lucide-react.mjs";
+import { N as Heart, d as Star, m as ShoppingBag, t as Zap } from "../_libs/lucide-react.mjs";
 import { l as useCart } from "./cart-store-CoxaE1M5.mjs";
 import { g as useNavigate, h as Link } from "../_libs/@tanstack/react-router+[...].mjs";
 import { n as toast } from "../_libs/sonner.mjs";

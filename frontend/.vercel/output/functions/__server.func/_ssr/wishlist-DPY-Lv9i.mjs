@@ -1,5 +1,5 @@
 import { n as require_jsx_runtime } from "../_libs/radix-ui__react-context+react.mjs";
-import { N as ArrowRight } from "../_libs/lucide-react.mjs";
+import { B as ArrowRight } from "../_libs/lucide-react.mjs";
 import { c as products } from "./cart-store-CoxaE1M5.mjs";
 import { h as Link } from "../_libs/@tanstack/react-router+[...].mjs";
 import { t as useWishlist } from "./wishlist-store-CA4unLzC.mjs";

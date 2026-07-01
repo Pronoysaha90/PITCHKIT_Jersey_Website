@@ -2,13 +2,13 @@ import { o as __toESM } from "../_runtime.mjs";
 import { t as jersey_blue_default } from "./jersey-blue-Cg7MS2wI.mjs";
 import { n as require_jsx_runtime } from "../_libs/radix-ui__react-context+react.mjs";
 import { r as require_react } from "../_libs/@radix-ui/react-compose-refs+[...].mjs";
-import { E as Mail, M as BadgePercent, N as ArrowRight, m as ShieldCheck, o as Truck, u as Star, v as Quote } from "../_libs/lucide-react.mjs";
+import { B as ArrowRight, L as ChevronRight, O as Mail, R as ChevronLeft, d as Star, h as ShieldCheck, s as Truck, y as Quote, z as BadgePercent } from "../_libs/lucide-react.mjs";
 import { a as jersey_yellow_default, c as products, i as jersey_white_default, n as bundles, o as productById, r as jersey_red_default } from "./cart-store-CoxaE1M5.mjs";
 import { g as useNavigate, h as Link } from "../_libs/@tanstack/react-router+[...].mjs";
 import { n as toast } from "../_libs/sonner.mjs";
 import { t as ProductCard } from "./ProductCard-69up3jhp.mjs";
-import { t as motion } from "../_libs/framer-motion.mjs";
-//#region node_modules/.nitro/vite/services/ssr/assets/routes-CrPsWBg2.js
+import { n as AnimatePresence, t as motion } from "../_libs/framer-motion.mjs";
+//#region node_modules/.nitro/vite/services/ssr/assets/routes-CSS1eoXn.js
 var import_react = /* @__PURE__ */ __toESM(require_react());
 var import_jsx_runtime = require_jsx_runtime();
 var banner_default = "/assets/banner-s1Le8QYU.png";
@@ -71,113 +71,289 @@ var staggerContainer = {
 		transition: { staggerChildren: .1 }
 	}
 };
+var heroImages = [
+	{
+		src: banner_default,
+		alt: "Featured football jersey in stadium"
+	},
+	{
+		src: jersey_red_default,
+		alt: "Premium Red Home Kit"
+	},
+	{
+		src: jersey_blue_default,
+		alt: "Classic Blue Away Kit"
+	},
+	{
+		src: jersey_white_default,
+		alt: "Clean White Third Kit"
+	}
+];
 function Home() {
 	const featured = products.slice(0, 8);
 	const navigate = useNavigate();
 	const [email, setEmail] = (0, import_react.useState)("");
+	const [currentHeroIndex, setCurrentHeroIndex] = (0, import_react.useState)(0);
+	(0, import_react.useEffect)(() => {
+		const timer = setInterval(() => {
+			setCurrentHeroIndex((prev) => (prev + 1) % heroImages.length);
+		}, 5e3);
+		return () => clearInterval(timer);
+	}, []);
 	const handleSubscribe = (e) => {
 		e.preventDefault();
 		if (!email) return;
 		toast.success("Thanks for subscribing! Check your email for your 10% discount code.");
 		setEmail("");
 	};
+	const nextSlide = () => setCurrentHeroIndex((prev) => (prev + 1) % heroImages.length);
+	const prevSlide = () => setCurrentHeroIndex((prev) => (prev - 1 + heroImages.length) % heroImages.length);
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
-			className: "relative overflow-hidden border-b border-border bg-background",
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				className: "container-x grid items-center gap-10 py-14 lg:grid-cols-2 lg:py-20",
-				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(motion.div, {
-					initial: "hidden",
-					animate: "visible",
-					variants: fadeInUp,
-					className: "order-2 lg:order-1 text-center lg:text-left flex flex-col items-center lg:items-start",
-					children: [
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							className: "chip bg-primary/10 text-primary",
-							children: "25/26 Season Drop"
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h1", {
-							className: "mt-4 font-display text-5xl leading-[0.95] sm:text-6xl lg:text-7xl",
-							children: [
-								"Wear the badge.",
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {}),
-								"Own the pitch."
-							]
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-							className: "mt-5 max-w-lg text-base text-muted-foreground mx-auto lg:mx-0",
-							children: "Premium home, away and retro kits from every league — built with the same fabrics the pros wear. Free shipping in Bangladesh over ৳12,000."
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "mt-7 flex flex-wrap justify-center lg:justify-start gap-3",
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
-								to: "/shop",
-								className: "inline-flex items-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground hover:bg-pitch-deep transition-transform hover:scale-105",
-								children: ["Shop new arrivals ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowRight, { className: "h-4 w-4" })]
-							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-								to: "/bundles",
-								className: "inline-flex items-center gap-2 rounded-md border border-foreground px-6 py-3 text-sm font-semibold hover:bg-foreground hover:text-background transition-transform hover:scale-105",
-								children: "Build a bundle — save 18%"
-							})]
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							className: "mt-8 flex flex-wrap justify-center lg:justify-start items-center gap-6 text-xs text-muted-foreground",
-							children: [
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									className: "flex items-center gap-2",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Truck, { className: "h-4 w-4 text-primary" }), " Free shipping over ৳12,000"]
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									className: "flex items-center gap-2",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShieldCheck, { className: "h-4 w-4 text-primary" }), " 30-day returns"]
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									className: "hidden sm:flex items-center gap-2",
-									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(BadgePercent, { className: "h-4 w-4 text-primary" }), " COD + bKash"]
-								})
-							]
-						})
-					]
-				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(motion.div, {
-					initial: {
-						opacity: 0,
-						scale: .9
-					},
+		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
+			className: "relative overflow-hidden border-b border-border bg-background/50",
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute top-0 -left-1/4 w-[150%] h-[150%] -z-20 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background" }),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(motion.div, {
 					animate: {
-						opacity: 1,
-						scale: 1
+						scale: [
+							1,
+							1.05,
+							1
+						],
+						opacity: [
+							.3,
+							.5,
+							.3
+						]
 					},
-					transition: { duration: .7 },
-					className: "relative order-1 lg:order-2",
-					children: [
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute -inset-6 -z-10 rounded-3xl pitch-stripe opacity-30" }),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
-							src: banner_default,
-							alt: "Featured football jersey hanging in stadium tunnel",
-							width: 1600,
-							height: 1100,
-							className: "w-full rounded-2xl object-cover shadow-pop"
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							className: "absolute -bottom-5 -left-5 hidden sm:block rounded-xl bg-background p-4 shadow-card border border-border",
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								className: "flex items-center gap-2",
+					transition: {
+						duration: 10,
+						repeat: Infinity,
+						ease: "easeInOut"
+					},
+					className: "absolute -top-40 -right-40 w-96 h-96 bg-primary/20 rounded-full blur-3xl -z-10"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(motion.div, {
+					animate: {
+						scale: [
+							1,
+							1.1,
+							1
+						],
+						opacity: [
+							.2,
+							.4,
+							.2
+						]
+					},
+					transition: {
+						duration: 12,
+						repeat: Infinity,
+						ease: "easeInOut",
+						delay: 2
+					},
+					className: "absolute -bottom-40 left-20 w-80 h-80 bg-accent/20 rounded-full blur-3xl -z-10"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: "container-x grid items-center gap-12 py-16 lg:grid-cols-2 lg:py-24 relative z-10",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(motion.div, {
+						initial: "hidden",
+						animate: "visible",
+						variants: fadeInUp,
+						className: "order-2 lg:order-1 text-center lg:text-left flex flex-col items-center lg:items-start",
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(motion.div, {
+								initial: {
+									opacity: 0,
+									scale: .8
+								},
+								animate: {
+									opacity: 1,
+									scale: 1
+								},
+								transition: { delay: .2 },
+								className: "chip bg-primary/10 text-primary border border-primary/20 backdrop-blur-sm",
+								children: "25/26 Season Drop"
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h1", {
+								className: "mt-6 font-display text-5xl leading-[1.05] sm:text-6xl lg:text-7xl xl:text-[5rem] tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-foreground to-foreground/70",
 								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Star, { className: "h-4 w-4 fill-amber-500 text-amber-500" }),
+									"Wear the badge.",
+									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {}),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-										className: "font-bold text-sm",
-										children: "4.8/5"
+										className: "text-primary italic pr-2",
+										children: "Own the pitch."
+									})
+								]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+								className: "mt-6 max-w-lg text-lg text-muted-foreground mx-auto lg:mx-0 leading-relaxed",
+								children: "Premium home, away and retro kits from every league — built with the same fabrics the pros wear. Free shipping in Bangladesh over ৳12,000."
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "mt-8 flex flex-wrap justify-center lg:justify-start gap-4",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
+									to: "/shop",
+									className: "group relative inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-sm font-bold text-primary-foreground overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_40px_rgba(var(--primary),0.4)]",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+										className: "relative z-10 flex items-center gap-2",
+										children: ["Shop new arrivals ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowRight, { className: "h-4 w-4 transition-transform group-hover:translate-x-1" })]
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-0 -z-10 bg-gradient-to-r from-primary via-pitch-deep to-primary opacity-0 transition-opacity duration-500 group-hover:opacity-100" })]
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+									to: "/bundles",
+									className: "inline-flex items-center gap-2 rounded-full border-2 border-foreground/10 bg-background/50 backdrop-blur-sm px-8 py-4 text-sm font-bold hover:border-foreground/30 hover:bg-foreground/5 transition-all hover:scale-105",
+									children: "Build a bundle — save 18%"
+								})]
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: "mt-10 flex flex-wrap justify-center lg:justify-start items-center gap-6 text-sm font-medium text-muted-foreground",
+								children: [
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "flex items-center gap-2 bg-background/50 px-3 py-1.5 rounded-full border border-border backdrop-blur-md shadow-sm",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Truck, { className: "h-4 w-4 text-primary" }), " Free shipping"]
 									}),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-										className: "text-xs text-muted-foreground",
-										children: "· 3,200+ shipped"
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "flex items-center gap-2 bg-background/50 px-3 py-1.5 rounded-full border border-border backdrop-blur-md shadow-sm",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShieldCheck, { className: "h-4 w-4 text-primary" }), " 30-day returns"]
+									}),
+									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "hidden sm:flex items-center gap-2 bg-background/50 px-3 py-1.5 rounded-full border border-border backdrop-blur-md shadow-sm",
+										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(BadgePercent, { className: "h-4 w-4 text-primary" }), " COD available"]
 									})
 								]
 							})
+						]
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(motion.div, {
+						initial: {
+							opacity: 0,
+							x: 50
+						},
+						animate: {
+							opacity: 1,
+							x: 0
+						},
+						transition: {
+							duration: .8,
+							ease: "easeOut"
+						},
+						className: "relative order-1 lg:order-2 perspective-1000",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: "relative aspect-[4/3] sm:aspect-[4/5] lg:aspect-[3/4] w-full max-w-md mx-auto xl:max-w-lg",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: "absolute top-1/2 -translate-y-1/2 -left-4 z-20",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+										onClick: prevSlide,
+										className: "p-2 rounded-full bg-background/80 backdrop-blur border border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all shadow-lg",
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronLeft, { className: "h-5 w-5" })
+									})
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: "absolute top-1/2 -translate-y-1/2 -right-4 z-20",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+										onClick: nextSlide,
+										className: "p-2 rounded-full bg-background/80 backdrop-blur border border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:scale-110 transition-all shadow-lg",
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronRight, { className: "h-5 w-5" })
+									})
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+									className: "absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2",
+									children: heroImages.map((_, idx) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+										onClick: () => setCurrentHeroIndex(idx),
+										className: `h-2 rounded-full transition-all duration-300 ${idx === currentHeroIndex ? "w-6 bg-primary" : "w-2 bg-white/50 hover:bg-white/80"}`
+									}, idx))
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute -inset-4 -z-10 rounded-[2.5rem] bg-gradient-to-br from-border/50 to-transparent border border-border/50 backdrop-blur-sm transform rotate-3" }),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute -inset-4 -z-20 rounded-[2.5rem] bg-accent/5 transform -rotate-2" }),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: "w-full h-full rounded-[2rem] overflow-hidden border border-border/50 shadow-2xl relative bg-card",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(AnimatePresence, {
+										mode: "popLayout",
+										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(motion.img, {
+											src: heroImages[currentHeroIndex].src,
+											alt: heroImages[currentHeroIndex].alt,
+											initial: {
+												opacity: 0,
+												scale: 1.1,
+												filter: "blur(10px)"
+											},
+											animate: {
+												opacity: 1,
+												scale: 1,
+												filter: "blur(0px)"
+											},
+											exit: {
+												opacity: 0,
+												scale: .9,
+												filter: "blur(10px)"
+											},
+											transition: {
+												duration: .7,
+												ease: "anticipate"
+											},
+											className: "absolute inset-0 w-full h-full object-cover"
+										}, currentHeroIndex)
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { className: "absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0" })]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(motion.div, {
+									initial: {
+										opacity: 0,
+										y: 20
+									},
+									animate: {
+										opacity: 1,
+										y: 0
+									},
+									transition: { delay: .5 },
+									className: "absolute -bottom-6 -left-6 hidden sm:flex items-center gap-4 rounded-2xl bg-background/90 backdrop-blur-xl p-4 shadow-xl border border-border z-20",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "flex -space-x-3",
+										children: [
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+												className: "h-10 w-10 rounded-full bg-blue-100 border-2 border-background flex items-center justify-center overflow-hidden",
+												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+													src: jersey_blue_default,
+													className: "h-full w-full object-cover"
+												})
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+												className: "h-10 w-10 rounded-full bg-red-100 border-2 border-background flex items-center justify-center overflow-hidden",
+												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+													src: jersey_red_default,
+													className: "h-full w-full object-cover"
+												})
+											}),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+												className: "h-10 w-10 rounded-full bg-yellow-100 border-2 border-background flex items-center justify-center overflow-hidden",
+												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+													src: jersey_yellow_default,
+													className: "h-full w-full object-cover"
+												})
+											})
+										]
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+										className: "flex items-center gap-1",
+										children: [
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Star, { className: "h-3.5 w-3.5 fill-amber-500 text-amber-500" }),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Star, { className: "h-3.5 w-3.5 fill-amber-500 text-amber-500" }),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Star, { className: "h-3.5 w-3.5 fill-amber-500 text-amber-500" }),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Star, { className: "h-3.5 w-3.5 fill-amber-500 text-amber-500" }),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Star, { className: "h-3.5 w-3.5 fill-amber-500 text-amber-500" }),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+												className: "font-bold text-sm ml-1",
+												children: "4.9/5"
+											})
+										]
+									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+										className: "text-xs text-muted-foreground font-medium",
+										children: "Over 3,200+ jerseys shipped"
+									})] })]
+								})
+							]
 						})
-					]
-				})]
-			})
+					})]
+				})
+			]
 		}),
 		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(motion.section, {
 			initial: "hidden",
