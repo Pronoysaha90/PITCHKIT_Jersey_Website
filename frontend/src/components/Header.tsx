@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { ShoppingBag, Search, Menu, Heart, User, LogIn, Mail, UserPen, Key, Package } from "lucide-react";
-import { useCartTotals } from "@/lib/cart-store";
+import { useCartTotals, useCart } from "@/lib/cart-store";
 import { useWishlist } from "@/lib/wishlist-store";
 import { useAuth } from "@/lib/auth-store";
 import { products } from "@/lib/products";
@@ -30,6 +30,8 @@ import {
 import { useState } from "react";
 import { toast } from "sonner";
 
+import { AuthModal } from "@/components/AuthModal";
+
 const navLinks = [
   { to: "/", label: "Home" },
   { to: "/shop", label: "Shop" },
@@ -39,46 +41,12 @@ const navLinks = [
 
 export function Header() {
   const { count } = useCartTotals();
+  const cartItems = useCart((s) => s.items);
   const wishlistItems = useWishlist((s) => s.items);
-  const { isLoggedIn, login, signup } = useAuth();
+  const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const [loginOpen, setLoginOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [isSignupView, setIsSignupView] = useState(false);
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-
-  const handleAuth = () => {
-    if (isSignupView) {
-      if (!email || !password || !name) {
-        toast.error("Please fill in all fields");
-        return;
-      }
-      const res = signup({ email, password, name });
-      if (res.success) {
-        toast.success("Account created successfully!");
-        setLoginOpen(false);
-        navigate({ to: "/profile" });
-      } else {
-        toast.error(res.error || "Failed to sign up");
-      }
-    } else {
-      if (!email || !password) {
-        toast.error("Please enter email and password");
-        return;
-      }
-      const res = login(email, password);
-      if (res.success) {
-        toast.success("Logged in successfully!");
-        setLoginOpen(false);
-        navigate({ to: "/profile" });
-      } else {
-        toast.error(res.error || "Failed to log in");
-      }
-    }
-  };
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
@@ -136,30 +104,112 @@ export function Header() {
             </CommandList>
           </CommandDialog>
 
-          <Link
-            to="/wishlist"
-            className="relative hidden md:grid h-10 w-10 place-items-center rounded-md hover:bg-muted"
-            aria-label="Wishlist"
-          >
-            <Heart className="h-5 w-5" />
-            {wishlistItems.length > 0 && (
-              <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-accent-foreground">
-                {wishlistItems.length}
-              </span>
-            )}
-          </Link>
-          <Link
-            to="/cart"
-            className="relative hidden md:grid h-10 w-10 place-items-center rounded-md hover:bg-muted"
-            aria-label="Cart"
-          >
-            <ShoppingBag className="h-5 w-5" />
-            {count > 0 && (
-              <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-accent-foreground">
-                {count}
-              </span>
-            )}
-          </Link>
+          {/* WISHLIST DROPDOWN */}
+          <div className="relative group hidden md:flex items-center h-16">
+            <Link
+              to="/wishlist"
+              className="relative grid h-10 w-10 place-items-center rounded-md hover:bg-muted"
+              aria-label="Wishlist"
+            >
+              <Heart className="h-5 w-5" />
+              {wishlistItems.length > 0 && (
+                <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-accent-foreground">
+                  {wishlistItems.length}
+                </span>
+              )}
+            </Link>
+            
+            {/* Wishlist Dropdown Content */}
+            <div className="absolute top-[60px] right-0 w-80 bg-background border border-border rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden transform group-hover:translate-y-0 translate-y-2">
+              <div className="p-4 flex flex-col gap-3 max-h-[350px] overflow-y-auto no-scrollbar">
+                {wishlistItems.length === 0 ? (
+                  <p className="text-sm text-muted-foreground text-center py-6">Your wishlist is empty</p>
+                ) : (
+                  wishlistItems.slice(0, 3).map((id) => {
+                    const p = products.find((x) => x.id === id);
+                    if (!p) return null;
+                    return (
+                      <div key={id} className="flex items-center gap-3">
+                        <img src={p.image} alt={p.name} className="w-14 h-[4.5rem] object-cover rounded-md border border-border" />
+                        <div className="flex flex-col flex-1">
+                          <span className="text-sm font-semibold line-clamp-2 leading-tight">{p.name}</span>
+                          <span className="text-xs font-bold text-primary mt-1">৳{p.price}</span>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+                {wishlistItems.length > 3 && (
+                  <div className="text-xs font-semibold text-center text-muted-foreground pt-3 border-t border-border mt-1">
+                    + {wishlistItems.length - 3} more items
+                  </div>
+                )}
+              </div>
+              {wishlistItems.length > 0 && (
+                <div className="p-4 border-t border-border bg-secondary/30">
+                  <Link to="/wishlist" className="flex items-center justify-center w-full py-2.5 text-sm font-bold bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors uppercase tracking-widest">
+                    View Wishlist
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* CART DROPDOWN */}
+          <div className="relative group hidden md:flex items-center h-16">
+            <Link
+              to="/cart"
+              className="relative grid h-10 w-10 place-items-center rounded-md hover:bg-muted"
+              aria-label="Cart"
+            >
+              <ShoppingBag className="h-5 w-5" />
+              {count > 0 && (
+                <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-accent px-1 text-[10px] font-bold text-accent-foreground">
+                  {count}
+                </span>
+              )}
+            </Link>
+
+            {/* Cart Dropdown Content */}
+            <div className="absolute top-[60px] right-0 w-80 bg-background border border-border rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 overflow-hidden transform group-hover:translate-y-0 translate-y-2">
+              <div className="p-4 flex flex-col gap-3 max-h-[350px] overflow-y-auto no-scrollbar">
+                {cartItems.length === 0 ? (
+                  <p className="text-sm text-muted-foreground text-center py-6">Your cart is empty</p>
+                ) : (
+                  cartItems.slice(0, 3).map((item) => {
+                    const p = products.find((x) => x.id === item.productId);
+                    if (!p) return null;
+                    return (
+                      <div key={item.id} className="flex items-center gap-3">
+                        <img src={p.image} alt={p.name} className="w-14 h-[4.5rem] object-cover rounded-md border border-border" />
+                        <div className="flex flex-col flex-1">
+                          <span className="text-sm font-semibold line-clamp-1">{p.name}</span>
+                          <span className="text-xs text-muted-foreground mt-0.5">Size: {item.size} | Qty: {item.quantity}</span>
+                          <span className="text-xs font-bold text-foreground mt-1">৳{(p.price * item.quantity).toFixed(2)}</span>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+                {cartItems.length > 3 && (
+                  <div className="text-xs font-semibold text-center text-muted-foreground pt-3 border-t border-border mt-1">
+                    + {cartItems.length - 3} more items
+                  </div>
+                )}
+              </div>
+              {cartItems.length > 0 && (
+                <div className="p-4 border-t border-border bg-secondary/30">
+                  <div className="flex justify-between items-center mb-4 text-base font-bold">
+                    <span>Subtotal</span>
+                    <span>৳{cartItems.reduce((acc, item) => acc + (products.find((x) => x.id === item.productId)?.price || 0) * item.quantity, 0).toFixed(2)}</span>
+                  </div>
+                  <Link to="/checkout" className="flex items-center justify-center w-full py-3 text-sm font-bold bg-foreground text-background rounded-lg hover:bg-foreground/90 transition-colors uppercase tracking-widest">
+                    Checkout Now
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
           
           {isLoggedIn ? (
             <button
@@ -170,74 +220,16 @@ export function Header() {
               <User className="h-5 w-5" />
             </button>
           ) : (
-            <Dialog open={loginOpen} onOpenChange={setLoginOpen}>
-              <DialogTrigger asChild>
-                <button
-                  className="grid h-10 w-10 place-items-center rounded-md hover:bg-muted focus:outline-none"
-                  aria-label="Login"
-                >
-                  <User className="h-5 w-5" />
-                </button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                  <DialogTitle>{isSignupView ? "Create an Account" : "Welcome to PITCHKIT"}</DialogTitle>
-                  <DialogDescription>
-                    {isSignupView ? "Sign up to start shopping and tracking your orders." : "Sign in to your account to continue."}
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  {isSignupView && (
-                    <div className="flex flex-col gap-2">
-                      <label htmlFor="name" className="text-sm font-medium text-foreground">Name</label>
-                      <input id="name" value={name} onChange={e => setName(e.target.value)} type="text" placeholder="John Doe" className="rounded-md border border-input bg-background px-3 py-2 text-sm focus:border-primary focus:outline-none" />
-                    </div>
-                  )}
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="email" className="text-sm font-medium text-foreground">Email</label>
-                    <input id="email" value={email} onChange={e => setEmail(e.target.value)} type="email" placeholder="name@example.com" className="rounded-md border border-input bg-background px-3 py-2 text-sm focus:border-primary focus:outline-none" />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="password" className="text-sm font-medium text-foreground">Password</label>
-                    <input id="password" value={password} onChange={e => setPassword(e.target.value)} type="password" placeholder="••••••••" className="rounded-md border border-input bg-background px-3 py-2 text-sm focus:border-primary focus:outline-none" />
-                    {!isSignupView && <button className="text-xs text-muted-foreground text-left hover:text-foreground underline w-fit">Forgot Password?</button>}
-                  </div>
-                  <button 
-                    onClick={handleAuth}
-                    className="mt-2 w-full rounded-md bg-foreground py-2.5 text-sm font-semibold text-background hover:bg-foreground/90 transition-colors"
-                  >
-                    {isSignupView ? "Sign up" : "Log In"}
-                  </button>
-                  
-                  {!isSignupView && (
-                    <>
-                      <div className="relative my-4">
-                        <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-border"></span></div>
-                        <div className="relative flex justify-center text-xs uppercase"><span className="bg-background px-2 text-muted-foreground">Or continue with</span></div>
-                      </div>
-                      <button
-                        onClick={() => {
-                          const res = login("user@gmail.com", "", true);
-                          if (res.success) {
-                            toast.success("Logged in with Google!");
-                            setLoginOpen(false);
-                            navigate({ to: "/profile" });
-                          }
-                        }}
-                        className="flex w-full items-center justify-center gap-2 rounded-md border border-input bg-background py-2.5 text-sm font-semibold hover:bg-muted transition-colors text-foreground"
-                      >
-                        <svg role="img" viewBox="0 0 24 24" className="h-4 w-4 fill-current"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"/></svg>
-                        Google
-                      </button>
-                    </>
-                  )}
-                  <p className="text-center text-sm text-muted-foreground mt-2">
-                    {isSignupView ? "Already have an account?" : "Don't have an account?"} <button onClick={() => setIsSignupView(!isSignupView)} className="font-semibold text-foreground hover:underline">{isSignupView ? "Log In" : "Sign up"}</button>
-                  </p>
-                </div>
-              </DialogContent>
-            </Dialog>
+            <button
+              onClick={() => setLoginOpen(true)}
+              className="grid h-10 w-10 place-items-center rounded-md hover:bg-muted focus:outline-none"
+              aria-label="Login"
+            >
+              <User className="h-5 w-5" />
+            </button>
           )}
+
+          <AuthModal open={loginOpen} onOpenChange={setLoginOpen} />
 
           <Sheet>
             <SheetTrigger asChild>
